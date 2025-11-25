@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -25,22 +26,32 @@ fun MemoramaScreenGame(
     onCardClick: (Int) -> Unit
 ) {
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(5.dp),
         columns = GridCells.Fixed(gridSize),
         verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         itemsIndexed(cards) { index, card ->
-            val flippedContainerColor = if (card.hasFlipped) Color.Green else Color.Black
+            val containerColor = when {
+                card.isChecked -> Color(0xFFFFC754)
+                card.hasFlipped -> Color.DarkGray
+                else -> Color.LightGray
+            }
+            val contentColor = when {
+                card.isChecked -> Color.Black
+                card.hasFlipped -> Color.LightGray
+                else -> Color.LightGray
+            }
+
             Card(
                 modifier = Modifier
                     .aspectRatio(1f)
                     .clickable(onClick = { onCardClick(index) }),
                 colors = CardColors(
-                    contentColor = Color.Black,
-                    containerColor = flippedContainerColor,
-                    disabledContainerColor = Color.Black,
-                    disabledContentColor = Color.Black
+                    contentColor = contentColor,
+                    containerColor = containerColor,
+                    disabledContainerColor = Color.LightGray,
+                    disabledContentColor = Color.LightGray
                 )
             ) {
                 Box(

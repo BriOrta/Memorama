@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
@@ -40,7 +41,7 @@ val icons = listOf(
     Icons.Filled.Build,
     Icons.Filled.Create,
     Icons.Filled.CheckCircle,
-    Icons.Filled.Call,
+    Icons.Filled.MailOutline,
     Icons.Filled.Home,
     Icons.Filled.Face,
     Icons.Filled.Favorite,
@@ -71,6 +72,7 @@ val icons = listOf(
 )
 
 data class GameCard(
-    val hasFlipped: Boolean,
-    val icon: ImageVector
+    var hasFlipped: Boolean = false,
+    val icon: ImageVector,
+    var isChecked: Boolean = false
 )
