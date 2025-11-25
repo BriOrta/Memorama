@@ -25,7 +25,9 @@ fun MemoramaScreen(
                     cards = currentState.cards,
                     onCardClick = { cardIndex -> viewModel.updateCard(cardIndex) }
                 )
-                is MemoramaScreenState.GameOver -> Text(text = "Game Over")
+                is MemoramaScreenState.GameOver -> GameOverScreen(
+                    onDismiss = {viewModel.isWorking = false}
+                )
             }
         }
     }

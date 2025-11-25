@@ -23,6 +23,26 @@ class MemoramaViewModel : ViewModel() {
         _state.value = MemoramaScreenState.Game(gridSize, cards)
     }
 
+    fun checkScore(deck:List<GameCard>){
+        // Check if all cards have been checked and modify the game state
+        val allChecked = deck.all { card -> card.isChecked }
+
+        if(allChecked) {
+            viewModelScope.launch {
+                delay(600)
+                _state.update {
+                    MemoramaScreenState.GameOver
+                }
+            }
+        }
+    }
+
+    // Non-idiomatic Kotlin way to modify the properties of the card elements inside
+    // of the card deck list. Kotlin optimizes attempts of copying an object (list in this case)
+    // as all of the elements are the same (but with a tiny modification, i.e. hasFlipped property)
+    // Which doesn't trigger Compose as there are no memory reference changes. -- That's why the
+    // deepCopyList() method forces the creation of a new object/reference to make the
+    // corresponding modifications on the desired card object.
     fun updateCard(cardIndex: Int) {
         if (state.value !is MemoramaScreenState.Game) return
         if (cardIndex == lastFlippedIndex || isWorking) return
@@ -52,7 +72,7 @@ class MemoramaViewModel : ViewModel() {
                     firstCard.isChecked = true
                     secondCard.isChecked = true
                 } else {
-                    delay(1000)
+                    delay(800)
                     // Modify the flipped property of both cards and reset
                     firstCard.hasFlipped = false
                     secondCard.hasFlipped = false
@@ -60,12 +80,15 @@ class MemoramaViewModel : ViewModel() {
                 lastFlippedIndex = null
             }
 
+            // Or _state.value = currentState.copy(cards = updatedCards)
             _state.update {
                 currentState.copy(cards = deepCopyList(deck))
             }
             isWorking = false
         }
-        // Or _state.value = currentState.copy(cards = updatedCards)
+
+        // Check if the user has won
+        checkScore(deck)
     }
 
     fun deepCopyList(list : List<GameCard>) : List<GameCard>{
