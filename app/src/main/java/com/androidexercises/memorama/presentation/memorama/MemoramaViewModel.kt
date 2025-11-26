@@ -17,10 +17,20 @@ class MemoramaViewModel : ViewModel() {
     val state = _state.asStateFlow()
     var lastFlippedIndex: Int? = null
     var isWorking = false
+    var gameGridSize:Int = 1
 
     fun startGame(gridSize: Int) {
+        gameGridSize = gridSize
         val cards = createCardDeck(gridSize)
         _state.value = MemoramaScreenState.Game(gridSize, cards)
+    }
+
+    fun goBackToMainMenu(){
+        _state.value = MemoramaScreenState.MainMenu
+    }
+
+    fun playAgain(){
+        startGame(gameGridSize)
     }
 
     fun checkScore(deck:List<GameCard>){

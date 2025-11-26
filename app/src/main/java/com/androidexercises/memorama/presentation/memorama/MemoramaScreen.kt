@@ -23,10 +23,12 @@ fun MemoramaScreen(
                 is MemoramaScreenState.Game -> MemoramaScreenGame(
                     gridSize = currentState.gridSize,
                     cards = currentState.cards,
-                    onCardClick = { cardIndex -> viewModel.updateCard(cardIndex) }
+                    onCardClick = { cardIndex -> viewModel.updateCard(cardIndex) },
+                    onClose = {viewModel.goBackToMainMenu()}
                 )
                 is MemoramaScreenState.GameOver -> GameOverScreen(
-                    onDismiss = {viewModel.isWorking = false}
+                    onDismiss = {viewModel.goBackToMainMenu()},
+                    playAgain = {viewModel.playAgain()}
                 )
             }
         }
