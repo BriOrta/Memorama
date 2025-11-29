@@ -1,6 +1,6 @@
 package com.androidexercises.memorama.presentation.theme
 
-import com.androidexercises.memorama.domain.GameCard
+import com.androidexercises.memorama.domain.memorama.GameCard
 
 sealed class MemoramaScreenState {
     data object MainMenu : MemoramaScreenState()

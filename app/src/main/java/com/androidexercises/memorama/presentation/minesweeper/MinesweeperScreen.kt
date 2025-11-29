@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.androidexercises.memorama.presentation.minesweeper.MinesweeperState
 
 @Composable
 fun MinesweeperScreen(
@@ -18,7 +19,7 @@ fun MinesweeperScreen(
     Scaffold { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
             when (state) {
-                is MinesweeperState.MinesweeperGame -> MinesweeperGameScreen{viewModel.showIcon()}
+                is MinesweeperState.MinesweeperGame -> MinesweeperGameScreen{viewModel.startGame()}
             }
         }
     }

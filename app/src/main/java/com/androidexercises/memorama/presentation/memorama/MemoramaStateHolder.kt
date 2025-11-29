@@ -4,11 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.androidexercises.memorama.domain.GameCard
-import com.androidexercises.memorama.domain.icons
+import com.androidexercises.memorama.domain.memorama.GameCard
 
 // Annotation that tells Kotlin that only when the memory reference changes, it has to recompose
 @Stable

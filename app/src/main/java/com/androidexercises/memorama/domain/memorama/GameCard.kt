@@ -1,4 +1,4 @@
-package com.androidexercises.memorama.domain
+package com.androidexercises.memorama.domain.memorama
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle

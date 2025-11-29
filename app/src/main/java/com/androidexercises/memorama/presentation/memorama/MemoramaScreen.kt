@@ -1,14 +1,16 @@
-package com.androidexercises.memorama.presentation.theme
+package com.androidexercises.memorama.presentation.memorama
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.androidexercises.memorama.presentation.theme.GameOverScreen
+import com.androidexercises.memorama.presentation.theme.MemoramaScreenState
+import com.androidexercises.memorama.presentation.theme.MemoramaViewModel
 
 @Composable
 fun MemoramaScreen(
@@ -24,11 +26,11 @@ fun MemoramaScreen(
                     gridSize = currentState.gridSize,
                     cards = currentState.cards,
                     onCardClick = { cardIndex -> viewModel.updateCard(cardIndex) },
-                    onClose = {viewModel.goBackToMainMenu()}
+                    onClose = { viewModel.goBackToMainMenu() }
                 )
                 is MemoramaScreenState.GameOver -> GameOverScreen(
-                    onDismiss = {viewModel.goBackToMainMenu()},
-                    playAgain = {viewModel.playAgain()}
+                    onDismiss = { viewModel.goBackToMainMenu() },
+                    playAgain = { viewModel.playAgain() }
                 )
             }
         }

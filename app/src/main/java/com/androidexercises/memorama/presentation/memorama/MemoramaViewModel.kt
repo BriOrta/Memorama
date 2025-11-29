@@ -4,8 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.androidexercises.memorama.domain.GameCard
-import com.androidexercises.memorama.domain.icons
+import com.androidexercises.memorama.domain.memorama.GameCard
+import com.androidexercises.memorama.domain.memorama.icons
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
