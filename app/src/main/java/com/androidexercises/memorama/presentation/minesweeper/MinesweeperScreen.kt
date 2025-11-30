@@ -18,8 +18,11 @@ fun MinesweeperScreen(
 
     Scaffold { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
-            when (state) {
-                is MinesweeperState.MinesweeperGame -> MinesweeperGameScreen{viewModel.startGame()}
+            when (val currentState = state) {
+                is MinesweeperState.MinesweeperGame -> MinesweeperGameScreen(
+                    board = currentState.board,
+                    showIcon = {viewModel.showIcon()}
+                )
             }
         }
     }

@@ -6,12 +6,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class MinesweeperViewModel() : ViewModel() {
-    private val _state = MutableStateFlow<MinesweeperState>(MinesweeperState.MinesweeperGame)
+    private val _state = MutableStateFlow<MinesweeperState>(
+        MinesweeperState.MinesweeperGame(
+            board = Board(
+                NUMBER_OF_ROWS,
+                NUMBER_OF_COLUMNS
+            )
+        )
+    )
     val state = _state.asStateFlow()
-
-    fun startGame() {
-
-    }
 
     fun showIcon() {
 
@@ -37,11 +40,11 @@ class MinesweeperViewModel() : ViewModel() {
                         letterIndex++
 
                         // If there are more letters in the word
-                        if(letterIndex <= wordLastIndex){
+                        if (letterIndex <= wordLastIndex) {
                             // Get next letter
                             letter = wordArray[letterIndex]
                             continue
-                        }else{
+                        } else {
                             // No more letters
                             foundWord = true
                             break
@@ -63,18 +66,18 @@ class MinesweeperViewModel() : ViewModel() {
         return foundWord
     }
 
-    fun binarySearch(nums: IntArray, target: Int) : Int{
+    fun binarySearch(nums: IntArray, target: Int): Int {
         // Check size of nums
         var startIndex = 0 // 0 [-1,0,3,5,9,12] ---> Search: 67
         var end = nums.size - 1 // 1
 
-        while(startIndex <= end){
-            val middle = (startIndex + end)/2
+        while (startIndex <= end) {
+            val middle = (startIndex + end) / 2
             val element = nums[middle]
             when {
                 element == target -> return middle // Found number
-                element < target -> startIndex = middle+1
-                else -> end = middle-1
+                element < target -> startIndex = middle + 1
+                else -> end = middle - 1
             }
         }
         return -1

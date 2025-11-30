@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.androidexercises.memorama.presentation.mainmenu.Game
@@ -17,15 +18,15 @@ import com.androidexercises.memorama.presentation.theme.MemoramaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val viewModel:MainMenuViewModel by viewModels()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MemoramaTheme {
-                val viewModel = MainMenuViewModel()
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 // MemoramaScreen()
-                MinesweeperScreen()
-                /*when(val currentState = state){
+                // MinesweeperScreen()
+                when(val currentState = state){
                     is MainMenuState.IdleState -> MainMenuScreen(viewModel::startGame)
                     is MainMenuState.GameState -> {
                         when(currentState.game){
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                             Game.Poker -> MemoramaScreen()
                         }
                     }
-                }*/
+                }
             }
         }
     }
