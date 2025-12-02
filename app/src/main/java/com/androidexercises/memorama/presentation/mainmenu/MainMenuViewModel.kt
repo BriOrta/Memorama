@@ -14,4 +14,10 @@ class MainMenuViewModel() : ViewModel(){
             MainMenuState.GameState(game)
         }
     }
+
+    fun mainMenu(){
+        _state.update {
+            MainMenuState.IdleState
+        }
+    }
 }

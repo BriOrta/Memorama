@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     is MainMenuState.IdleState -> MainMenuScreen(viewModel::startGame)
                     is MainMenuState.GameState -> {
                         when(currentState.game){
-                            Game.Minesweeper -> MinesweeperScreen()
+                            Game.Minesweeper -> MinesweeperScreen(goToMainMenu = viewModel::mainMenu)
                             Game.Memorama -> MemoramaScreen()
                             Game.Poker -> MemoramaScreen()
                         }

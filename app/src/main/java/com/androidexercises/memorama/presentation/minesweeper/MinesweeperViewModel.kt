@@ -1,24 +1,58 @@
 package com.androidexercises.memorama.presentation.minesweeper
 
 import androidx.lifecycle.ViewModel
-import com.androidexercises.memorama.presentation.minesweeper.MinesweeperState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class MinesweeperViewModel() : ViewModel() {
     private val _state = MutableStateFlow<MinesweeperState>(
         MinesweeperState.MinesweeperGame(
-            board = Board(
-                NUMBER_OF_ROWS,
-                NUMBER_OF_COLUMNS
-            )
+            board = Board.generateBoard()
         )
     )
-    val state = _state.asStateFlow()
 
-    fun showIcon() {
-
+    fun reset(){
+        _state.update {
+            MinesweeperState.MinesweeperGame(
+                board = Board.generateBoard()
+            )
+        }
     }
+
+    fun gameOver(){
+        _state.update {
+            MinesweeperState.MinesweeperGameOver
+        }
+    }
+
+    fun flagCell(rowIndex:Int, columnIndex:Int){
+        val currentState = state.value
+        if(currentState !is MinesweeperState.MinesweeperGame) return
+
+        val newGrid = currentState.board.grid.map { it.clone() }
+        val cell = newGrid[rowIndex][columnIndex]
+        newGrid[rowIndex][columnIndex] = cell.copy(isFlagged = !cell.isFlagged)
+
+        _state.update {
+            currentState.copy(Board(newGrid))
+        }
+    }
+
+    fun changeColor(rowIndex:Int, columnIndex:Int){
+        val currentState = state.value
+        if(currentState !is MinesweeperState.MinesweeperGame) return
+
+        val newGrid = currentState.board.grid.map { it.clone() }
+        val cell = newGrid[rowIndex][columnIndex]
+        newGrid[rowIndex][columnIndex] = cell.copy(isClicked = true)
+
+        _state.update {
+            currentState.copy(Board(newGrid))
+        }
+    }
+
+    val state = _state.asStateFlow()
 
     fun findWord(board: Array<CharArray>, word: String): Boolean {
         val wordArray = word.toCharArray()
