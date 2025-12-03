@@ -1,5 +1,8 @@
 package com.androidexercises.memorama.presentation.minesweeper
 
+import kotlin.compareTo
+import kotlin.ranges.rangeTo
+
 sealed class MinesweeperState() {
     data class MinesweeperGame(val board: Board) : MinesweeperState()
     data object MinesweeperGameOver: MinesweeperState()
@@ -22,14 +25,44 @@ data class Board(val grid:List<Array<MinesweeperCell>>) {
 
             var counter = 0
 
-            for (x in 0..NUMBER_OF_ROWS - 1) {
-                for (y in 0..NUMBER_OF_COLUMNS - 1) {
-                    grid[x][y] = listOfCells[counter]
+            for (i in 0..NUMBER_OF_ROWS - 1) {
+                for (j in 0..NUMBER_OF_COLUMNS - 1) {
+                    val cell = listOfCells[counter]
+                    grid[i][j] = cell
                     counter++
                 }
             }
 
-            return Board(grid)
+            val newGrid = countBombs(grid)
+
+            return Board(newGrid)
+        }
+
+        fun countBombs(grid:List<Array<MinesweeperCell>>) : List<Array<MinesweeperCell>>{
+            val newGrid = grid.map { it.clone() }
+
+            for(i in 0..NUMBER_OF_ROWS-1){
+                for(j in 0..NUMBER_OF_COLUMNS-1){
+                    if (grid[i][j].isBomb){
+                        val startX = if(i - 1 < 0 ) i else i -1
+                        val startY = if(j - 1 < 0 ) 0 else j -1
+                        val endX = if(i + 1 >= NUMBER_OF_ROWS ) i else i +1
+                        val endY = if(j + 1 >= NUMBER_OF_COLUMNS ) j else j + 1
+
+                        for (x in startX..endX){
+                            for(y in startY..endY) {
+                                val cell = newGrid[x][y]
+                                if (!cell.isBomb) {
+                                    newGrid[x][y] =
+                                        cell.copy(surroundingBombs = cell.surroundingBombs + 1)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return newGrid
         }
     }
 }

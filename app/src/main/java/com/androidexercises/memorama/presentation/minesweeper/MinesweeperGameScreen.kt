@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 const val NUMBER_OF_ROWS = 10
 const val NUMBER_OF_COLUMNS = 5
 const val NUMBER_OF_BOMBS = 10
+const val IS_DEBUG = true
 
 @Composable
 fun MinesweeperGameScreen(
@@ -83,7 +85,7 @@ fun MinesweeperCellIcon(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val color = if (cell.isClicked) Color.Gray else (if(cell.isBomb) Color.Red else Color.White)
+    val color = if (cell.isClicked) Color.Gray else (if(IS_DEBUG && cell.isBomb) Color.Red else Color.White)
 
     Box(
         modifier = Modifier
@@ -101,6 +103,10 @@ fun MinesweeperCellIcon(
                 imageVector = Icons.Filled.Star,
                 contentDescription = "Flagged",
             )
+        }
+
+        if(cell.isClicked){
+            Text("${cell.surroundingBombs}")
         }
     }
 }
